@@ -1,16 +1,7 @@
+#include "../include/singly_linked_list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-typedef struct _node {
-    int value;
-    struct _node* next;
-} node;
-
-typedef struct _linked_list {
-    int size;
-    struct _node* head;
-} linked_list;
 
 linked_list* create_list() {
     linked_list* list = malloc(sizeof(linked_list));
@@ -20,18 +11,19 @@ linked_list* create_list() {
 }
 
 void free_list(linked_list* list) {
+    if (list == NULL) return;
+    list->size = 0;
     linked_list* start_pointer = list;
-    // free every node
     while (list->head != NULL) {
         node* tmp = list->head;
         list->head = list->head->next;
         free(tmp);
     }
-    // free the wrapper
     free(start_pointer);
 }
 
 void insert_head(linked_list* list, int value) {
+    if (list == NULL) return;
     node* new_node = malloc(sizeof(node));
     new_node->value = value;
     if (list->size > 0) {
@@ -46,6 +38,7 @@ void insert_head(linked_list* list, int value) {
 }
 
 void insert_tail(linked_list* list, int value) {
+    if (list == NULL) return;
     node* new_node = malloc(sizeof(node));
     new_node->value = value;
     if (list->size == 0) {
@@ -63,6 +56,7 @@ void insert_tail(linked_list* list, int value) {
 }
 
 void insert_position(linked_list* list, int position, int value) {
+    if (list == NULL) return;
     if (position == 0) {
         insert_head(list, value);
         return;
@@ -86,6 +80,7 @@ void insert_position(linked_list* list, int position, int value) {
 }
 
 void remove_head(linked_list* list) {
+    if (list == NULL) return;
     if (list->size == 0) return;
     node* tmp = list->head->next;
     free(list->head);
@@ -94,6 +89,7 @@ void remove_head(linked_list* list) {
 }
 
 void remove_tail(linked_list* list) {
+    if (list == NULL) return;
     if (list->size == 0) return;
     if (list->size == 1) {
         free(list->head);
@@ -111,6 +107,7 @@ void remove_tail(linked_list* list) {
 }
 
 void remove_by_index(linked_list* list, int index) {
+    if (list == NULL) return;
     if (list->size == 0) return;
     if (list->size <= index) return;
     if (index == 0) {
@@ -128,6 +125,7 @@ void remove_by_index(linked_list* list, int index) {
 }
 
 void remove_by_value(linked_list* list, int value) {
+    if (list == NULL) return;
     if (list->size == 0) return;
     if (list->size == 1) {
         if (list->head->value == value) {
@@ -159,6 +157,7 @@ void remove_by_value(linked_list* list, int value) {
 }
 
 bool contains(linked_list* list, int value) {
+    if (list == NULL) return false;
     node* dummy = list->head;
     while (dummy != NULL) {
         if (dummy->value == value) return true;
@@ -168,6 +167,7 @@ bool contains(linked_list* list, int value) {
 }
 
 int index_of(linked_list* list, int value) {
+    if (list == NULL) return -1;
     if (list->size == 0) return -1;
     node* dummy = list->head;
     int i = 0;
@@ -181,39 +181,54 @@ int index_of(linked_list* list, int value) {
     return -1;
 }
 
-void print_as_string(linked_list *list) {
-    printf("list as string: ");
-    node *elem = list->head;
-    for (int i = 0; i < list->size; i++) {
-        printf("%d ", elem->value);
-        elem = elem->next;
-    }
-    printf("\n");
+int is_empty(linked_list* list) {
+    if (list == NULL) return 1;
+    return list->size == 0;
 }
 
-int main(void) {
-    linked_list* list = create_list();
-    insert_head(list, 10);
-    print_as_string(list);
-    insert_head(list, 11);
-    print_as_string(list);
-    insert_tail(list, 20);
-    print_as_string(list);
-    insert_position(list, 0, 55);
-    print_as_string(list);
-    // remove_by_value(list, 11);
-    // print_as_string(list);
-    // remove_head(list);
-    // print_as_string(list);
-    // remove_tail(list);
-    // print_as_string(list);
-    remove_by_index(list, 3);
-    print_as_string(list);
-    printf("Contains %d -> %d\n", 10, contains(list, 10));
-    printf("Index of %d is %d\n", 10, index_of(list, 10));
-    printf("Reversed:\n");
-    // IMPLEMENT
-    print_as_string(list);
-    free_list(list);
-    return EXIT_SUCCESS;
+int get_size(linked_list* list) {
+    if (list == NULL) return 0;
+    return list->size;
+}
+
+void update_by_index(linked_list* list, int index, int value) {
+    if (list == NULL) return;
+    if (list->size <= 0) return;
+    if (list->size <= index) return;
+    node* dummy = list->head;
+    int i = 0;
+    while (dummy != NULL) {
+        if (i == index) {
+            dummy->value = value;
+            break;
+        }
+        i++;
+        dummy = dummy->next;
+    }
+}
+
+linked_list* reverse_list(linked_list* list) {
+    if (list == NULL) return NULL;
+    if (list->size == 0) return list;
+    node* curr = list->head;
+    node* prev = NULL;
+    while (curr) {
+        node* tmp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = tmp;
+    }
+    list->head = prev;
+    return list;
+}
+
+void print_as_string(linked_list *list) {
+    if (list == NULL) return;
+    printf("List: ");
+    node *elem = list->head;
+    for (int i = 0; i < list->size; i++) {
+        printf("%d -> ", elem->value);
+        elem = elem->next;
+    }
+    printf("NULL\n");
 }
