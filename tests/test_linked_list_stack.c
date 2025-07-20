@@ -1,4 +1,4 @@
-#include "../include/dynamic_stack.h"
+#include "../include/linked_list_stack.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>

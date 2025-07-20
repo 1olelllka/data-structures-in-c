@@ -1,12 +1,11 @@
-#ifndef STACK
+#ifndef LINKED_LIST_STACK
 
-#define STACK
+#define LINKED_LIST_STACK
 #include <stdbool.h>
 
 typedef struct _stack {
     struct _node* top;
     int size;
-    int capacity;
 } stack;
 
 typedef struct _node {
