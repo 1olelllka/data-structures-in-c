@@ -31,6 +31,7 @@ void print_stack(stack* pointer) {
     printf(" -----------\n");
 }
 
+// LIFO -- Last In First Out Principle
 int push(stack* pointer, int value) {
     if (pointer == NULL) return EXIT_FAILURE;
     node* new_node = malloc(sizeof(node));
