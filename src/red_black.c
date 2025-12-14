@@ -322,6 +322,44 @@ int remove_node(red_black_tree* tree, int value) {
     return EXIT_SUCCESS;
 }
 
+int validate_reds_children(node* root) {
+    if (!root) return EXIT_SUCCESS;
+    if (root->color == RED) {
+        if (root->left && root->left->color == RED) return EXIT_FAILURE;
+        if (root->right && root->right->color == RED) return EXIT_FAILURE;
+    }
+    return validate_reds_children(root->left) && validate_reds_children(root->right);
+}
+
+int validate_black_depth(node* root, int* result) {
+    if (!root) return 1;
+    int left_height = validate_black_depth(root->left, result);
+    int right_height = validate_black_depth(root->right, result);
+
+    if (*result == EXIT_FAILURE) return -1;
+
+    int curr = root->color == BLACK ? 1 : 0;
+    if (left_height == right_height) {
+        return left_height + curr;
+    } else {
+        *result = EXIT_FAILURE;
+        return -1;
+    }
+}
+
+int validate_tree(red_black_tree* tree) {
+    if (!tree) return EXIT_FAILURE;
+    if (!tree->root) return EXIT_SUCCESS; // we assume that NIL node is black, so technically it's correct
+    // Rule 1: The root must be black
+    if (tree->root->color != BLACK) return EXIT_FAILURE;
+    // Rule 2: If a node is red, then its children are black
+    if (validate_reds_children(tree->root) == EXIT_FAILURE) return EXIT_FAILURE;
+    // Rule 3: All paths from a node to its NIL descendants contain the same number of black nodes
+    int result = EXIT_SUCCESS;
+    validate_black_depth(tree->root, &result);
+    return result;
+}
+
 void clean_helper(node* root) {
     if (root == NULL) return;
     clean_helper(root->left);

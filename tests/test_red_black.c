@@ -27,6 +27,7 @@ void test_simple_insertion(red_black_tree* tree) {
     assert(tree->root->right->left->color == RED);
     assert(tree->root->right->right->value == 25);
     assert(tree->root->right->right->color == RED);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("Simple insertions: OK.\n");
 }
 
@@ -41,6 +42,7 @@ void test_insertion_cases(red_black_tree* tree) {
     assert(tree->root->right->left->value == 15);
     assert(tree->root->right->left->left->color == RED);
     assert(tree->root->right->left->left->value == 13);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("Left-left case: OK.\n");
 
     assert(insert(tree, 7) == EXIT_SUCCESS); // right-right case
@@ -50,6 +52,7 @@ void test_insertion_cases(red_black_tree* tree) {
     assert(tree->root->left->left->value == 1);
     assert(tree->root->left->right->value == 7);
     assert(tree->root->left->right->color == RED);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("Right-Right case: OK.\n");
 
     assert(insert(tree, 30) == EXIT_SUCCESS);
@@ -62,6 +65,7 @@ void test_insertion_cases(red_black_tree* tree) {
     assert(tree->root->right->right->right->color == RED);
     assert(tree->root->right->right->right->value == 30);
     assert(tree->number_of_nodes == 10);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("Right-Left case: OK.\n");
 
     assert(insert(tree, 14) == EXIT_SUCCESS); // left-right case
@@ -74,6 +78,7 @@ void test_insertion_cases(red_black_tree* tree) {
     assert(tree->root->right->left->right->color == RED);
     assert(tree->root->right->left->right->value == 15);
     assert(tree->number_of_nodes == 11);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("Left-Right case: OK.\n");
     printf("Insertion cases: OK.\n");
 }
@@ -82,6 +87,7 @@ void test_insertion_duplicates(red_black_tree* tree) {
     printf("Inserting duplicates...");
     assert(insert(tree, 20) == EXIT_FAILURE);
     assert(tree->number_of_nodes == 11);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("Inserting duplicates: OK.\n");
 }
 
@@ -123,6 +129,7 @@ void test_cascade_tree() {
     assert(tree->root->right->right->value == 22);
     assert(tree->root->right->right->right->color == RED);
     assert(tree->root->right->right->right->value == 26);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     assert(free_tree(tree) == EXIT_SUCCESS);
     printf("Cascade tree: OK.\n");
 }
@@ -142,6 +149,7 @@ void test_simple_delete(red_black_tree* tree) {
     assert(tree->root->right->left->value == 15);
     assert(tree->root->right->left->right == NULL);
     assert(tree->root->right->left->left == NULL);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     printf("OK.\n");
 }
 
@@ -163,6 +171,7 @@ void test_complex_delete() {
     assert(tree->root->right->right->value == 38);
     assert(tree->root->right->right->color == RED);
     assert(tree->root->right->left == NULL);
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     clean_tree(tree);
 
     /* Case: delete the root with two children */
@@ -178,7 +187,7 @@ void test_complex_delete() {
     assert(tree->root->value != 50);
     assert(tree->root->left->value == 25);
     assert(tree->root->left->color == BLACK);
-
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     /* Case: delete a red leaf (simple) */
     int seqRedLeaf[] = {10, 5, 15};
     clean_tree(tree);
@@ -191,7 +200,7 @@ void test_complex_delete() {
     assert(tree->root->value == 10);
     assert(tree->root->right == NULL);
     assert(tree->root->color == BLACK);
-
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     /* Case: delete black node with one red child */
     int seqBlackWithRed[] = {10, 5, 15, 1};
     clean_tree(tree);
@@ -203,7 +212,7 @@ void test_complex_delete() {
     assert(remove_node(tree, 5) == EXIT_SUCCESS);
     assert(tree->root->left->value == 1);
     assert(tree->root->left->color == BLACK);
-
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     int seqEmpty[] = {10, 5, 15};
     clean_tree(tree);
     for (int i = 0; i < 3; i++) {
@@ -214,8 +223,7 @@ void test_complex_delete() {
     assert(remove_node(tree, 10) == EXIT_SUCCESS);
     assert(tree->root == NULL);
     assert(tree->number_of_nodes == 0);
-
-
+    assert(validate_tree(tree) == EXIT_SUCCESS);
     free_tree(tree);
 }
 

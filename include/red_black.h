@@ -30,4 +30,6 @@ int clean_tree(red_black_tree* tree);
 
 int free_tree(red_black_tree* tree);
 
+int validate_tree(red_black_tree* tree);
+
 void print_tree(node* root, int depth, char prefix);
