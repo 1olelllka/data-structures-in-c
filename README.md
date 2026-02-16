@@ -9,10 +9,10 @@
 * Binary Search Tree (BST)
 * Adelson-Velsky and Landis Tree (AVL)
 * Red-Black Tree
+* Max Heap
 
 ### Planned
 * Hashmap
-* Heap
 
 ## How to use it
 ```c
