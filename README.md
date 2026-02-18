@@ -10,9 +10,8 @@
 * Adelson-Velsky and Landis Tree (AVL)
 * Red-Black Tree
 * Max Heap
+* Hash Table (with both chaining and rehashing strategies)
 
-### Planned
-* Hashmap
 
 ## How to use it
 ```c
@@ -61,4 +60,4 @@ make clean
 ```
 
 ## Project Status
-Actively maintained. Development may pause during university semesters and resume during breaks.
+Simple implementations of main data structures are completed. Next, it is planned to make most of them generic and in perspective thread-safe. Development may pause during university semesters and resume during breaks.
