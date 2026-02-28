@@ -15,7 +15,7 @@ queue* create_queue() {
     return new_queue;
 }
 
-int enqueue(queue* pointer, int value) {
+int enqueue(queue* pointer, void* value) {
     if (pointer == NULL) return EXIT_FAILURE;
     node* new_elem = malloc(sizeof(node));
     if (new_elem == NULL) {
@@ -35,7 +35,7 @@ int enqueue(queue* pointer, int value) {
     return EXIT_SUCCESS;
 }
 
-int dequeue(queue* pointer, int* val) {
+int dequeue(queue* pointer, void** val) {
     if (pointer == NULL) return EXIT_FAILURE;
     if (val == NULL) return EXIT_FAILURE;
     if (pointer->head == NULL) return EXIT_FAILURE;
@@ -89,12 +89,13 @@ int clear_queue(queue* pointer) {
     return EXIT_SUCCESS;
 }
 
-void print_queue(queue* pointer) {
+void print_queue(queue* pointer, void (*print_func)(void*)) {
     if (pointer == NULL) return;
     node* dummy = pointer->head;
     printf("HEAD: -> ");
     while (dummy) {
-        printf("( %d ) -> ", dummy->value);
+        print_func(dummy->value);
+        printf(" -> ");
         dummy = dummy->next;
     }
     printf(":TAIL\n");

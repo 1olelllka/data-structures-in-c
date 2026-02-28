@@ -10,15 +10,15 @@ typedef struct _queue {
 } queue;
 
 typedef struct _node {
-    int value;
+    void* value;
     struct _node* next;
 } node;
 
 queue* create_queue();
 
-int enqueue(queue* pointer, int value);
+int enqueue(queue* pointer, void* value);
 
-int dequeue(queue* pointer, int* value);
+int dequeue(queue* pointer, void** value);
 
 node* peek(queue* pointer);
 
@@ -30,7 +30,7 @@ int get_size(queue* pointer);
 
 int clear_queue(queue* pointer);
 
-void print_queue(queue* pointer);
+void print_queue(queue* pointer, void (*func)(void*));
 
 int free_queue(queue* pointer);
 
